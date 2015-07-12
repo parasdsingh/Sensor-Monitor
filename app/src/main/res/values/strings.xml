@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Intensity Meter</string>
+
+    <string name="txt_sensor_status">Status:</string>
+    <string name="btn_record">Start</string>
+    <string name="txt_user_hint">To inspect the graph, Press stop and zoom using your fingers.</string>
+</resources>
