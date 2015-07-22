@@ -1,18 +1,18 @@
 /**
  * GraphView
  * Copyright (C) 2014  Jonas Gehring
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License,
  * with the "Linking Exception", which can be found at the license.txt
  * file in this program.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * with the "Linking Exception" along with this program; if not,
  * write to the author Jonas Gehring <g.jjoe64@gmail.com>.
@@ -119,7 +119,7 @@ public abstract class BaseSeries<E extends DataPointInterface> implements Series
      */
     public double getHighestValueX() {
         if (mData.isEmpty()) return 0d;
-        return mData.get(mData.size()-1).getX();
+        return mData.get(mData.size() - 1).getX();
     }
 
     /**
@@ -180,19 +180,21 @@ public abstract class BaseSeries<E extends DataPointInterface> implements Series
                     if (org.hasNext()) {
                         prevValue = org.next();
                     }
-                    if (prevValue.getX() >= from) {
-                        nextValue = prevValue;
-                        found = true;
-                    } else {
-                        while (org.hasNext()) {
-                            nextValue = org.next();
-                            if (nextValue.getX() >= from) {
-                                found = true;
-                                nextNextValue = nextValue;
-                                nextValue = prevValue;
-                                break;
+                    if (prevValue != null) {
+                        if (prevValue.getX() >= from) {
+                            nextValue = prevValue;
+                            found = true;
+                        } else {
+                            while (org.hasNext()) {
+                                nextValue = org.next();
+                                if (nextValue.getX() >= from) {
+                                    found = true;
+                                    nextNextValue = nextValue;
+                                    nextValue = prevValue;
+                                    break;
+                                }
+                                prevValue = nextValue;
                             }
-                            prevValue = nextValue;
                         }
                     }
                     if (!found) {
@@ -309,7 +311,7 @@ public abstract class BaseSeries<E extends DataPointInterface> implements Series
             float x2 = x;
             float y2 = y;
 
-            float distance = (float) Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+            float distance = (float) Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
             if (shortest == null || distance < shortestDistance) {
                 shortestDistance = distance;
                 shortest = entry.getValue();
@@ -382,7 +384,7 @@ public abstract class BaseSeries<E extends DataPointInterface> implements Series
     public void appendData(E dataPoint, boolean scrollToEnd, int maxDataPoints) {
         checkValueOrder(dataPoint);
 
-        if (!mData.isEmpty() && dataPoint.getX() < mData.get(mData.size()-1).getX()) {
+        if (!mData.isEmpty() && dataPoint.getX() < mData.get(mData.size() - 1).getX()) {
             throw new IllegalArgumentException("new x-value must be greater then the last value. x-values has to be ordered in ASC.");
         }
         synchronized (mData) {
@@ -425,10 +427,10 @@ public abstract class BaseSeries<E extends DataPointInterface> implements Series
      *                  datapoint is after the last point.
      */
     protected void checkValueOrder(DataPointInterface onlyLast) {
-        if (mData.size()>1) {
+        if (mData.size() > 1) {
             if (onlyLast != null) {
                 // only check last
-                if (onlyLast.getX() < mData.get(mData.size()-1).getX()) {
+                if (onlyLast.getX() < mData.get(mData.size() - 1).getX()) {
                     throw new IllegalArgumentException("new x-value must be greater then the last value. x-values has to be ordered in ASC.");
                 }
             } else {
